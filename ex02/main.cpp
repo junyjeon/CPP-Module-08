@@ -1,37 +1,33 @@
-#include "Array.hpp"
+#include "MutantStack.hpp"
 
 int main()
 {
-    // int
-    Array<int> intArray(3);
-    std::cout << "intArray size: " << intArray.size() << std::endl;
-    for (unsigned int i = 0; i < intArray.size(); i++)
-    {
-        intArray[i] = i * 10;
-        std::cout << "intArray[" << i << "]: " << intArray[i] << std::endl;
-    }
-    std::cout << std::endl;
+    MutantStack<int> mstack;
 
-    // double
-    Array<double> doubleArray(3);
-    doubleArray[0] = 0.1;
-    doubleArray[1] = 0.2;
-    doubleArray[2] = 0.3;
-    std::cout << "doubleArray size: " << doubleArray.size() << std::endl;
-    for (unsigned int i = 0; i < doubleArray.size(); i++)
-    {
-        std::cout << "doubleArray[" << i << "]: " << doubleArray[i] << std::endl;
-    }
+    mstack.push(5);
+    mstack.push(17);
 
-    try
-    {
-        std::cout << "Trying to access out of bounds: " << intArray[3];
-    }
-    catch (std::exception &e)
-    {
-        std::cout << std::endl
-                  << "Exception caught: " << e.what() << std::endl;
-    }
+    std::cout << mstack.top() << std::endl;
 
+    mstack.pop();
+
+    std::cout << mstack.size() << std::endl;
+
+    mstack.push(3);
+    mstack.push(5);
+    mstack.push(737); //[...]
+    mstack.push(0);
+
+    MutantStack<int>::iterator it = mstack.begin();
+    MutantStack<int>::iterator ite = mstack.end();
+
+    ++it;
+    --it;
+    while (it != ite)
+    {
+        std::cout << *it << std::endl;
+        ++it;
+    }
+    std::stack<int> s(mstack);
     return 0;
 }
